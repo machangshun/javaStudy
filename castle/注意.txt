@@ -1,0 +1,2 @@
+注意，代码中的汉字用的是UTF-8编码。请在Eclipse里将文件的编码格式改为UTF-8：
+File --> Properties --> Resource (Text file encoding) ==> Other [UTF-8]

@@ -1,0 +1,80 @@
+堆排序的理解前提：二叉堆
+堆：一种特殊的数据结构 一般采用完全二叉树
+完全二叉树：每一层节点达到最大，并且最后一层节点集中在最左边
+父节点小于等于其子节点称为小根堆，左右孩子节点之间的大小关系并无影响
+父节点大于等于其子节点称为大根堆
+
+利用数组来存储二叉树的话 如果父节点的下标为K 那么左孩子的下标为2*K，右孩子的下标为2*K+1
+知道孩子节点为K的话，父节点为K/2
+
+以它在优先级队列应用来说，对于一个优先级队列，以优先级高的先行处理，处理完后出队，再运行下一个优先级高的。
+期间插入的优先级如何处理才能使效率更高？
+方法一：每次遍历数组找到优先级高的运行，然后删除它（虽然插入很快，但删除很慢O(n)）
+方法二：先对来的进行插入排序，高的删除（删除很快，插入很慢O(n)）
+方法三：利用二叉堆进行排序O(1)
+对于到来的进程插入二叉堆，必然会破坏二叉堆的结构，那么我们就需要利用“上浮”操作来恢复二叉堆的结构
+以小根堆来举例：
+将插入节点与父节点进行比较，如果小于父节点的话将其与父节点交换，重复此操作到完成为止
+arr下标从1开始，0不存任何数据
+//插入操作，即进行上浮操作
+public void swim(int []arr,int inserted){
+	int parent = inserted/2;
+	if(arr[inserted] < arr[parent]){
+		swap(arr,inserted,parent);
+		swim(arry,parent);
+	}
+}
+1.将堆顶的元素与最后一个元素进行交换，然后删除最后一个元素
+2.将堆顶的元素进行下沉操作，与孩子节点中最小的进行比较，比孩子节点大的话进行下沉操作。重复直到完成为止
+//删除
+/*
+1.交换堆顶与堆最后一个元素
+2.堆大小(headSize)-1
+3.调整堆sink(arr,1)
+*/
+public void sink(int[] arr,int parentIndex){
+	int heapSize = arr.length - 1;
+	int minNodeIndex = minIndex(arr,parentIndex,heapSize);
+	if(minNodeIndex != parentIndex){
+		swap(arr,minNodeIndex,parentIndex);
+		sink(arr,minNodeIndex);
+	}
+}
+private int minIndex(int[] arr,int parentIndex,int heapSize){
+	int minIndex = parentIndex;
+	int leftIndex = leftIndex(parentIndex);
+	if(leftIndex <= heapSize){
+		int minIndex = arr[leftIndex] < arr[parentIndex] ? leftIndex : parentIndex;
+	}
+	int rightIndex <= rightIndex(parentIndex);
+	if(rightIndex <= heapSize){
+		int minIndex = arr[rightIndex] < arr[minIndex] ? rightIndex :minIndex;
+	}
+	return minIndex;
+}
+//堆排：利用下沉操作构建二叉堆
+public void buildHeap(int []arr){
+	for(int i = heapSize / 2; i>= 1; i--){
+		sink(arr,i);
+	}
+}
+private void deleteMin(int[] arr){
+	swap(arr,heapSize);
+	heapSize--;
+	sink(arr,parentIndex);
+}
+public void heapSort(int []arr){
+	int N = arr.length - 1;
+	buildHeap(arr);
+	for(int i = 1; i <= N-1; i++){
+		deleteMin(arr);
+	}
+}
+
+
+
+
+
+
+
+
