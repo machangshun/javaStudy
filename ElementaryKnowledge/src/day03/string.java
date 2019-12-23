@@ -19,7 +19,7 @@ public class string {
 //		}
 //		for(char k : s) {}
 		//下标切片
-		System.out.println(s.substring(3+1));
+		System.out.println("下标切片："+s.substring(3+1));
 		System.out.println(s.substring(2,3));
 		//找到返回下标，否则返回-1
 		System.out.println(s.indexOf('4'));
